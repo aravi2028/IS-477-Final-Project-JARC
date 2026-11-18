@@ -98,13 +98,21 @@ Profiling of `huggingface_spotify.csv` is in `prof_samp.ipynb`.
 
 ## Next steps
 
-| Task | Owner | Next action |
-| --- | --- | --- |
-| 8 | Jonah | Finish Last.fm collection on the same stratified sample |
-| 9 | Ankith | Normalize names and join on MBID; assign confidence flags; store in SQLite |
-| 11 | Kevin | Match rates by genre; hand-check a sample of matches |
+| Task | Owner  | Next action                                                                |
+| ---- | ------ | -------------------------------------------------------------------------- |
+| 8    | Jonah  | Finish Last.fm collection on the same stratified sample                    |
+| 9    | Ankith | Normalize names and join on MBID; assign confidence flags; store in SQLite |
+| 11   | Kevin  | Match rates by genre; hand-check a sample of matches                       |
 
-## Team contributions
+## Challenges or Problems Faced
+
+| Problem                                                                                   |
+| ----------------------------------------------------------------------------------------- |
+| Musicbrainz limits queries to 1 second per query, so it took hours to query 6780 tracks   |
+| Musicbrainz limits queries per user, so different individuals have to perform the queries |
+|                                                                                           |
+
+## Team Contributions
 
 | Team member      | Contributions so far                                                                                                                           |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
