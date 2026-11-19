@@ -2,7 +2,7 @@
 
 ## Summary
 
-We have acquired the Spotify base dataset, profiled it, deduplicated it, and drawn a stratified sample by genre. Multiple members ran rate-limited MusicBrainz collection scripts: one is a general query for tracks after the year 2000, and the other uses the stratified sample. The stratified-sample collection is complete (6,780 tracks, 59% matched with high or medium confidence). Record linkage, integration, and analysis have not started yet.
+We have acquired the Spotify base dataset, profiled it, deduplicated it, and drawn a stratified sample by genre. Multiple members ran rate-limited MusicBrainz collection scripts: one is a general query for tracks after the year 2000, and the other uses the stratified sample. The stratified-sample collection is complete (6,780 tracks, 59% matched with high or medium confidence). The record linkage and integration script has been created and tested on sample data; the full-data run and match review are pending. Analysis has not started yet.
 
 ## Progress on the timeline
 
@@ -16,7 +16,7 @@ We have acquired the Spotify base dataset, profiled it, deduplicated it, and dra
 | 6      | Sampling design                          | Kevin         | Nov 4          | Done (`prof_samp.ipynb`, `spotify_stratified_sample.csv`)                                                         |
 | 7      | MusicBrainz collection                   | Kevin & Jonah | Nov 9          | Done for the stratified sample: 6,780 tracks collected and parsed (`data/interim/musicbrainz_recordings.csv`)       |
 | 8      | Last.fm collection                       | Jonah         | Nov 9          | In progress: initial queries done (`lastfm.json`)                                                                  |
-| 9      | Record linkage and integration           | Ankith        | Nov 14         | Not started                                                                                                           |
+| 9      | Record linkage and integration           | Ankith        | Nov 14         | In progress: script created and tested on sample data; full-data run and validation pending. |
 | 10     | Status report                            | Rohan         | Nov 17         | This document                                                                                                         |
 | 11–17 | Quality assessment through final release | Team          | Nov 21–Dec 10 | Not started                                                                                                           |
 
@@ -113,6 +113,20 @@ Profiling of `huggingface_spotify.csv` is in `prof_samp.ipynb`.
 
 **Repository:** the raw responses (`data/raw/`, about 130 MB) are excluded from git with `.gitignore`. The parsed table, the scripts, and the logs are committed.
 
+### Task 9: Record Linkage and Integration – Ankith
+
+I worked on the record linkage and integration portion of our project using our Spotify, MusicBrainz, and Last.fm data sources.
+
+For the integration process, I created a Python script that standardizes track and artist names by making capitalization and punctuation consistent and handling featured artists and remastered song titles. This should help reduce mismatches when comparing records across different sources.
+
+For MusicBrainz, I used the existing matching results that include Spotify track IDs, recording MBIDs, artist MBIDs, and confidence scores. Our current MusicBrainz dataset contains 6,780 tracks, with 4,006 having high- or medium-confidence matches. I also included additional name comparisons to identify matches that may need manual review.
+
+For Last.fm, I added matching logic that checks recording MBIDs when available and otherwise compares normalized track and artist names. The script assigns confidence flags so we can distinguish reliable matches from those needing further verification.
+
+The script is designed to combine the information into one integrated dataset containing Spotify audio features and popularity, MusicBrainz metadata, and available Last.fm listener and play counts. It saves the results in CSV and SQLite formats for easier analysis.
+
+**Current status:** The integration script has been created and tested on sample data. We still need to run it on the full project data, verify the Last.fm JSON format, and review uncertain matches. Once those steps are finished, we can use the integrated dataset for our quality assessment and regression analysis.
+
 ## Changes to the plan
 
 - **Sample size:** the stratified sample file contains up to 500 tracks per genre. API enrichment uses the first 60 per genre, to stay within the plan's 50–80 and the MusicBrainz rate limit. The larger sample is kept in case we want to enrich more tracks later.
@@ -124,7 +138,7 @@ Profiling of `huggingface_spotify.csv` is in `prof_samp.ipynb`.
 | Task | Owner  | Next action                                                                |
 | ---- | ------ | -------------------------------------------------------------------------- |
 | 8    | Jonah  | Finish Last.fm collection on the same stratified sample                    |
-| 9    | Ankith | Normalize names and join on MBID; assign confidence flags; store in SQLite |
+| 9    | Ankith | Run integration on full project data; verify Last.fm JSON format; review uncertain matches |
 | 11   | Kevin  | Match rates by genre; hand-check a sample of matches                       |
 
 ## Challenges or Problems Faced
@@ -139,7 +153,7 @@ Profiling of `huggingface_spotify.csv` is in `prof_samp.ipynb`.
 
 | Team member      | Contributions so far                                                                                                                           |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ankith Ravikumar | Reviewed source licenses and API terms; documented sharing restrictions, ethical risks, and pending release checks. Record linkage and integration have not started.                                                                                                                |
+| Ankith Ravikumar | Reviewed source licenses and API terms; documented sharing restrictions, ethical risks, and pending release checks. Created and sample-tested the record linkage and integration script; full-data execution and match validation pending.                                                                                                                |
 | Rohan Kare       | _(to be completed by Rohan)_                                                                                                                 |
 | Kevin Chen       | Uploaded the Spotify dataset; initial profiling; deduplication and stratified sampling; MusicBrainz collection and parsing scripts             |
 | Jonah Miller     | Initial MusicBrainz and Last.fm API queries (`IS477FinalProject.ipynb`, `musicbrainz.json`, `lastfm.json`) _(more details from Jonah)_ |
