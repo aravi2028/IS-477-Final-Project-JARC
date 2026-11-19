@@ -9,7 +9,7 @@ We have acquired the Spotify base dataset, profiled it, deduplicated it, and dra
 | #      | Task                                     | Owner         | Target         | Status                                                                                                                |
 | ------ | ---------------------------------------- | ------------- | -------------- | --------------------------------------------------------------------------------------------------------------------- |
 | 1      | Project plan                             | Entire team   | Oct 22         | Done                                                                                                                  |
-| 2      | Ethics and licensing review              | Ankith        | Oct 28         | _(to be completed by Ankith)_                                                                                       |
+| 2      | Ethics and licensing review              | Ankith        | Oct 28         | Initial review complete; permission checks and release cleanup pending. See Task 2 below.                                                                                       |
 | 3      | Acquire Spotify data                     | Rohan         | Oct 28         | Done: `huggingface_spotify.csv` (114,000 rows) in the repo                                                          |
 | 4      | Storage and organization                 | Rohan         | Oct 30         | Partly done: `data/raw/` and `data/interim/` exist for MusicBrainz output; other files are still in the repo root |
 | 5      | Initial profiling                        | Kevin         | Nov 2          | Done (`prof_samp.ipynb`)                                                                                            |
@@ -21,6 +21,29 @@ We have acquired the Spotify base dataset, profiled it, deduplicated it, and dra
 | 11–17 | Quality assessment through final release | Team          | Nov 21–Dec 10 | Not started                                                                                                           |
 
 ## Completed work
+
+### Ethics and licensing review (Task 2) – Ankith
+
+I reviewed the licenses and terms for Spotify’s Hugging Face dataset, MusicBrainz, and Last.fm. I focused on what we can use in our project and what we can share in our public GitHub repository. The review identified several items that still need confirmation; it does not mean that all permissions or repository changes are complete.
+
+**Spotify dataset.** The [Hugging Face dataset page](https://huggingface.co/datasets/maharshipandya/spotify-tracks-dataset) lists 114,000 rows and labels the license as “bsd.” However, that label alone does not establish the uploader’s rights to license all Spotify-derived content or identify all conditions that apply. [Spotify’s Developer Terms](https://developer.spotify.com/terms) and [Developer Policy](https://developer.spotify.com/policy) restrict storage, transfer, analysis, and machine-learning uses of Spotify Content obtained through its platform. Our source is a third-party download, so we still need to clarify its collection history and the rights that apply to our intended use. I recommend asking the instructor about this before treating the data as cleared for analysis or redistribution. Until this is resolved, we should avoid publishing additional raw or row-level copies and review the Spotify files already in the repository. Attribution by itself does not resolve the permission question.
+
+**MusicBrainz.** MusicBrainz separates [core data from supplementary data](https://musicbrainz.org/doc/MusicBrainz_Database). Core data is released under CC0. Its published list includes recording MBIDs, titles, artist credits, duration, ISRCs, artist metadata, and release dates. Supplementary data, such as annotations, tags, ratings, and search indexes, uses CC BY-NC-SA 3.0, which requires credit, noncommercial use, and sharing adaptations under the same license. We should record which fields we keep and avoid treating an entire search response as CC0. The parsed table should also distinguish MusicBrainz metadata from our own matching flags. Keeping raw responses out of GitHub is a useful precaution, but any older JSON files and notebook outputs also need review. See the [MusicBrainz licensing page](https://musicbrainz.org/doc/About/Data_License).
+
+**Last.fm.** The [Last.fm API terms](https://www.last.fm/api/tos) ask researchers and students to contact Last.fm before academic use. They allow certain noncommercial copying and sharing subject to conditions, including attribution, license notices, privacy requirements, and restrictions on sublicensing. They also set a 100 MB usage/storage cap unless written consent is obtained, require caching according to response headers, and prohibit bypassing rate limits. We should confirm our academic use and planned public outputs with Last.fm. Until then, I recommend keeping Last.fm responses and extracts out of the public release, including reviewing `lastfm.json` and `lastfm_orig.json`. Our GitHub code license would not give others new rights to Last.fm data.
+
+**Ethical issues and next steps.** Our results should distinguish Spotify popularity scores from Last.fm listener and play counts because they measure different things. The status report also shows that MusicBrainz matches vary by genre. Analyzing only matched tracks could therefore give a misleading picture of the full sample. We should report missingness and match rates, hand-check uncertain matches, and avoid claiming that a high match score proves two recordings are identical.
+
+Before the final release, we should:
+
+- Document each source, collection date, retained fields, and applicable license or terms.
+- Keep API keys and credentials out of scripts, logs, and notebook outputs. If a real key was exposed, revoke or rotate it.
+- Review raw data, extracts, and notebook outputs already tracked in Git. Adding a path to `.gitignore` does not remove existing tracked files or history.
+- Respect API limits and avoid collecting individual listening histories or other unnecessary personal data.
+- Publish our scripts, methods, and only those data fields and results cleared for sharing. Summary results also need review; aggregation is not automatic permission.
+
+**Status:** The initial review is complete. Spotify provenance/permissions, Last.fm academic-use confirmation, field-level release decisions, and repository cleanup remain open. These are recommendations and pending checks, not actions already completed.
+
 
 ### Initial profiling (Task 5)
 
@@ -116,7 +139,7 @@ Profiling of `huggingface_spotify.csv` is in `prof_samp.ipynb`.
 
 | Team member      | Contributions so far                                                                                                                           |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ankith Ravikumar | _(to be completed by Ankith)_                                                                                                                |
+| Ankith Ravikumar | Reviewed source licenses and API terms; documented sharing restrictions, ethical risks, and pending release checks. Record linkage and integration have not started.                                                                                                                |
 | Rohan Kare       | _(to be completed by Rohan)_                                                                                                                 |
 | Kevin Chen       | Uploaded the Spotify dataset; initial profiling; deduplication and stratified sampling; MusicBrainz collection and parsing scripts             |
 | Jonah Miller     | Initial MusicBrainz and Last.fm API queries (`IS477FinalProject.ipynb`, `musicbrainz.json`, `lastfm.json`) _(more details from Jonah)_ |
