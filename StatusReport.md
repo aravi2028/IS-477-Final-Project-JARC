@@ -44,7 +44,7 @@ Before the final release, we should:
 
 **Status:** The initial review is complete. Spotify provenance/permissions, Last.fm academic-use confirmation, field-level release decisions, and repository cleanup remain open. These are recommendations and pending checks, not actions already completed.
 
-###Storage and organization
+### Storage and Organization
 
 I set up the storage plan for our project so that the folder a file sits in shows its processing stage. Source data goes in data/raw/ exactly as it was downloaded or returned by an API, and those files are never edited. Tables that our scripts make from the raw data, such as parsed, deduplicated or sampled tables, go in data/interim/. The integrated, analysis-ready table from record linkage (Task 9) will go in data/processed/. Any change to a raw file produces a new file in a later stage instead of overwriting the original, so every step can be traced back to its source.
 
