@@ -123,7 +123,7 @@ Profiling of `huggingface_spotify.csv` is in `prof_samp.ipynb`.
 
 **Repository:** the raw responses (`data/raw/`, about 130 MB) are excluded from git with `.gitignore`. The parsed table, the scripts, and the logs are committed.
 
-### Task 9: Record Linkage and Integration – Ankith
+### Task 9: Record Linkage and Integration 
 
 I worked on the record linkage and integration portion of our project using our Spotify, MusicBrainz, and Last.fm data sources.
 
