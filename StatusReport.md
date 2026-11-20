@@ -11,7 +11,7 @@ We have acquired the Spotify base dataset, profiled it, deduplicated it, and dra
 | 1      | Project plan                             | Entire team   | Oct 22         | Done                                                                                                                  |
 | 2      | Ethics and licensing review              | Ankith        | Oct 28         | Initial review complete; permission checks and release cleanup pending. See Task 2 below.                                                                                       |
 | 3      | Acquire Spotify data                     | Rohan         | Oct 28         | Done: `huggingface_spotify.csv` (114,000 rows) in the repo                                                          |
-| 4      | Storage and organization                 | Rohan         | Oct 30         | Partly done: `data/raw/` and `data/interim/` exist for MusicBrainz output; other files are still in the repo root |
+| 4      | Storage and organization                 | Rohan         | Oct 30         |  Done : all files in repository |
 | 5      | Initial profiling                        | Kevin         | Nov 2          | Done (`prof_samp.ipynb`)                                                                                            |
 | 6      | Sampling design                          | Kevin         | Nov 4          | Done (`prof_samp.ipynb`, `spotify_stratified_sample.csv`)                                                         |
 | 7      | MusicBrainz collection                   | Kevin & Jonah | Nov 9          | Done for the stratified sample: 6,780 tracks collected and parsed (`data/interim/musicbrainz_recordings.csv`)       |
