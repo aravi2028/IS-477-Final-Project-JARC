@@ -1,0 +1,14 @@
+# Secrets: API keys stay out of the repo
+lastfmapi_key.txt
+*.env
+.env
+
+# Raw API responses (large; redistribution depends on each API's terms)
+data/raw/
+
+# Python / Jupyter / OS clutter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+*.json.tmp
